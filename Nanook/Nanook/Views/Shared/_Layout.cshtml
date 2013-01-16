@@ -1,0 +1,52 @@
+﻿@using Ethos.Modules.WebMessager;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")" type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="page">
+
+        <!-- Web Message Section -->
+        @{
+            string error_close_html = "<div id=\"close_div\" style=\"float: right;\"><a href=\"javascript:void(0)\" id=\"error_close_link-modelstate\" style=\"color: #ffeeee;\">[X]</a></div>";
+            string message_close_html = "<div id=\"close_div\" style=\"float: right;\"><a href=\"javascript:void(0)\" id=\"msg_close_link-info\" style=\"color: #ffeeee;\">[X]</a></div>";
+         }
+        
+        @Html.WebMessageViewer(new ModelStateMessageProvider(ViewData.ModelState)).DisplayTheKey().WithHtmlAttributes("summary-error-modelstate", "validation-summary-errors").WithCloseFeature("error_close_link-modelstate", error_close_html).Render()
+
+        @Html.WebMessageViewer(new TempDataMessagerProvider(TempData, "Nanook.TempDataMessager")).DoNotDisplayTheKey().WithHtmlAttributes("message-summary", "message-summary").WithCloseFeature("msg_close_link-info", message_close_html).Render()
+
+        <div id="header">
+            <div id="title">
+                <h1>NANOOK!</h1>
+            </div>
+
+            <div id="logindisplay">
+                @Html.Partial("_LogOnPartial") @Html.Partial("_SearchPartial")
+            </div>
+
+            <div id="menucontainer">
+
+                <ul id="menu">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("My Unsolved Questions", "MyOutstandingQuestions", "Question")</li>
+                    <li>@Html.ActionLink("My Questions", "MyQuestions", "Question")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                </ul>
+
+            </div>
+        </div>
+
+        <div id="main">
+            @RenderBody()
+            <div id="footer">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

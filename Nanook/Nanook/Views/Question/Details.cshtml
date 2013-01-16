@@ -1,0 +1,131 @@
+﻿@model Nanook.Models.QuestionDetailsViewModel
+
+@using Nanook.Shared;
+@{
+    ViewBag.Title = string.Format("Question: {0}", Model.Question.Title);
+}
+
+<div id="question">
+
+    <table width="100%">
+        <thead>
+            <tr>
+                <th style="width: 10%;">
+                    @if (Model.Question.AnswerID.HasValue)
+                    { 
+                    <img src="/Content/answered.png" alt="Answered" />
+                    }
+                    else
+                    { 
+                    <img src="/Content/outstanding.png" alt="Answered" />
+                    }
+                </th>
+                <th style="font-size: x-large;">
+                    @Model.Question.Title
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td style="font-size: larger;">
+                    @Html.TextBlock(Model.Question.Content)
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="text-align: right; font-style: italic;">
+                    @Model.Question.PostedBy posted at @Model.Question.PostedOn.ToString()
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="text-align: right;">
+                    @if (Model.Question.IsMyQuestion)
+                    {
+                        if (Model.Question.AnswerID.HasValue)
+                        { 
+                            <!-- 
+                            this action should navigate to another page and use POST or use Ajax and PUT 
+                            HTTP method to update the question information rather than GET 
+                            but since this is just a demo i utilize a normal GET linkage to implement
+                            -->
+                            @Html.ActionLink("Unmark Answer", "UnmarkAnswer", new { questionId = Model.Question.ID, postedById = Model.Question.PostedByID })
+                        }
+                        else
+                        { 
+                            @Html.ActionLink("Edit", "Edit", new { questionId = Model.Question.ID })
+                        }
+                    }
+                    |
+                    @Html.ActionLink("Add Feedback", "Create", "Feedback", new { questionId = Model.Question.ID }, null)
+                </td>
+            </tr>
+
+            @if (Model.Question.AnswerID.HasValue)
+            {
+                var answer = Model.Feedbacks.Where(f => f.IsAnswer).FirstOrDefault();
+                if (answer != null)
+                { 
+            <tr>
+                <td>
+                    <img src="/Content/answered.png" alt="Answered" />
+                </td>
+                <td style="font-size: larger;">
+                    @Html.TextBlock(answer.Feedback)
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="text-align: right; font-style: italic;">
+                    @answer.PostedBy posted at @answer.PostedOn.ToString()
+                </td>
+            </tr>
+                }
+            }
+            
+            @foreach (var feedback in Model.Feedbacks.Where(f => !f.IsAnswer).OrderBy(f => f.PostedOn))
+            { 
+            <tr>
+                <td></td>
+                <td style="font-size: larger;">
+                    @Html.TextBlock(feedback.Feedback)
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="text-align: right; font-style: italic;">
+                    @feedback.PostedBy posted at @feedback.PostedOn.ToString()
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="text-align: right;">
+                    @if (feedback.IsMyFeedback && !feedback.IsAnswer)
+                    { 
+                        @Html.ActionLink("Edit", "Edit", "Feedback", new { feedbackId = feedback.ID }, null)
+                    }
+                    |
+                    <!-- 
+                        this action should navigate to another page and use POST or use Ajax and PUT 
+                        HTTP method to update the question information rather than GET 
+                        but since this is just a demo i utilize a normal GET linkage to implement
+                    -->
+                    @if (Model.Question.IsMyQuestion && !feedback.IsAnswer)
+                    { 
+                        @Html.ActionLink("Mark Answer", "MarkAnswer", new { feedbackId = feedback.ID, questionId = Model.Question.ID, postedById = Model.Question.PostedByID })
+                    }
+                </td>
+            </tr>
+            }
+            
+            <tr>
+                <td></td>
+                <td style="text-align: right;">
+                    @Html.ActionLink("Add Feedback", "Create", "Feedback", new { questionId = Model.Question.ID }, null)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+

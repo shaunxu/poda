@@ -1,0 +1,55 @@
+﻿@model Nanook.Models.HomeSearchViewModel
+
+@using Nanook.Shared;
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>
+    You are searching for "@Model.Keyword"
+</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th></th>
+            <th>Question</th>
+            <th>Content</th>
+            <th>Feedback(s)</th>
+            <th>Posted On</th>
+            <th>Posted By</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var question in Model.Questions)
+        { 
+        <tr>
+            <td>
+                @if (question.Answered)
+                { 
+                    <img src="/Content/answered.png" alt="Answered" />
+                }
+                else
+                { 
+                    <img src="/Content/outstanding.png" alt="Outstanding" />
+                }
+            </td>
+            <td>
+                @Html.ActionLink(question.Title, "Details", "Question", new { questionId = question.ID }, null)
+            </td>
+            <td>
+                @Html.TextBlock(question.Question)
+            </td>
+            <td>
+                @question.AnswerCount.ToString()
+            </td>
+            <td>
+                @question.PostedOn.ToString()
+            </td>
+            <td>
+                @question.PostedBy
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,46 @@
+﻿@model Nanook.Models.QuestionMyQuestionsViewModel
+
+@using Nanook.Shared;
+@{
+    ViewBag.Title = "My Questions";
+}
+
+<h2>My Questions</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th></th>
+            <th>Question</th>
+            <th>Content</th>
+            <th>Posted On</th>
+            <th>Feedback(s)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var question in Model.Questions) { 
+        <tr>
+            <td>
+                @if (question.HasValidAnswer) {
+                    <img src="/Content/answered.png" alt="Answered" />
+                }
+                else { 
+                    <img src="/Content/outstanding.png" alt="Answered" />
+                }
+            </td>
+            <td>
+                @Html.ActionLink(question.Title, "Details", new { questionId = question.ID })
+            </td>
+            <td>
+                @Html.TextBlock(question.Question)
+            </td>
+            <td>
+                @question.PostedOn.ToString()
+            </td>
+            <td>
+                @question.AnswerCount.ToString()
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

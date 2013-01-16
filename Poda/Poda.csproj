@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B4B0161A-DDEE-4FE0-9507-137ED9F31E3E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Poda</RootNamespace>
+    <AssemblyName>Poda</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Build.Tasks.v4.0" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Configuration\ConfigurationFileProvider\ConfigurationFileProvider.cs" />
+    <Compile Include="Configuration\ConfigurationFileProvider\Database\DatabaseElement.cs" />
+    <Compile Include="Configuration\ConfigurationFileProvider\Database\DatabaseElementCollection.cs" />
+    <Compile Include="Configuration\ConfigurationFileProvider\Dispatcher\DispatcherElement.cs" />
+    <Compile Include="Configuration\ConfigurationFileProvider\Dispatcher\DispatcherElementCollection.cs" />
+    <Compile Include="Configuration\ConfigurationFileProvider\Federation\FederationElement.cs" />
+    <Compile Include="Configuration\ConfigurationFileProvider\Federation\FederationElementCollection.cs" />
+    <Compile Include="Configuration\ConfigurationFileProvider\GenericElementCollection.cs" />
+    <Compile Include="Configuration\ConfigurationFileProvider\PodaConfigurationSection.cs" />
+    <Compile Include="Configuration\ConfigurationFileProvider\Policy\PolicyElement.cs" />
+    <Compile Include="Configuration\ConfigurationFileProvider\Policy\PolicyElementCollection.cs" />
+    <Compile Include="Configuration\ConfigurationFileProvider\Reference\ReferenceElement.cs" />
+    <Compile Include="Configuration\ConfigurationFileProvider\Reference\ReferenceElementCollection.cs" />
+    <Compile Include="Configuration\ConfigurationFileProvider\VersionProvider\VersionProviderElement.cs" />
+    <Compile Include="Configuration\ConfigurationFileProvider\VersionProvider\VersionProviderElementCollection.cs" />
+    <Compile Include="Configuration\IPolicyConfiguration.cs" />
+    <Compile Include="Configuration\IConfigurationProvider.cs" />
+    <Compile Include="Configuration\IDatabaseConfiguration.cs" />
+    <Compile Include="Configuration\IDispatcherConfiguration.cs" />
+    <Compile Include="Configuration\IFederationConfiguration.cs" />
+    <Compile Include="Configuration\IPodaConfiguration.cs" />
+    <Compile Include="Configuration\IReferenceConfiguration.cs" />
+    <Compile Include="Configuration\IVersionProviderConfiguration.cs" />
+    <Compile Include="DataEngine\Command.cs" />
+    <Compile Include="DataEngine\DataConnection.cs" />
+    <Compile Include="DataEngine\DataFederation.cs" />
+    <Compile Include="DataEngine\PodaEngine.cs" />
+    <Compile Include="DataEngine\ExecuteWithRetriesException.cs" />
+    <Compile Include="Dispatcher\ConsistentHashDispatcher.cs" />
+    <Compile Include="EntityConverters\AttributesMapEntityConverter.cs" />
+    <Compile Include="EntityConverters\Attributes\EntityConverterAttribute.cs" />
+    <Compile Include="EntityConverters\Attributes\LogicNameAttribute.cs" />
+    <Compile Include="EntityConverters\PropertyNameMapEntityConverter.cs" />
+    <Compile Include="EntityConverters\SpecifiedEntityConverter.cs" />
+    <Compile Include="Factory.cs" />
+    <Compile Include="Shared\DataSharding.cs" />
+    <Compile Include="Shared\ICommand.cs" />
+    <Compile Include="Shared\IDbDispatcher.cs" />
+    <Compile Include="Shared\IPodaEngine.cs" />
+    <Compile Include="Shared\IEntityConverter.cs" />
+    <Compile Include="Shared\IVersionProvider.cs" />
+    <Compile Include="VersionProviders\KeyPrefixingVersionProvider.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="readme.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,50 @@
+﻿@model Nanook.Models.HomeIndexViewModel
+
+@using Nanook.Shared;
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div id="ask_question">
+    <h2>@Html.ActionLink("Ask a question", "Create", "Question", null, null)</h2>
+</div>
+
+<hr />
+
+<div id="top_questions">
+    <h2>All outstanding questions here.</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Question</th>
+                <th>Content</th>
+                <th>Feedback(s)</th>
+                <th>Posted On</th>
+                <th>Posted By</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var question in Model.Questions) 
+            { 
+            <tr>
+                <td>
+                    @Html.ActionLink(question.Title, "Details", "Question", new { questionId = question.ID }, null)
+                </td>
+                <td>
+                    @Html.TextBlock(question.Question)
+                </td>
+                <td>
+                    @question.AnswerCount.ToString()
+                </td>
+                <td>
+                    @question.PostedOn.ToString()
+                </td>
+                <td>
+                    @question.PostedBy
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

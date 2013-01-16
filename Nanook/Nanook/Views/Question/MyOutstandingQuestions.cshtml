@@ -1,0 +1,39 @@
+﻿@model Nanook.Models.QuestionMyOutstandingQuestionsViewModel
+
+@using Nanook.Shared;
+
+@{
+    ViewBag.Title = "My Outstanding Questions";
+}
+
+<h2>My Outstanding Questions</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Question</th>
+            <th>Content</th>
+            <th>Feedback(s)</th>
+            <th>Posted On</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var question in Model.Questions) { 
+        <tr>
+            <td>
+                @Html.ActionLink(question.Title, "Details", new { questionId = question.ID })
+            </td>
+            <td>
+                @Html.TextBlock(question.Question)
+            </td>
+            <td>
+                @question.AnswerCount.ToString()
+            </td>
+            <td>
+                @question.PostedOn.ToString()
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
